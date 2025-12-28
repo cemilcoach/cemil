@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kapı Sesi Alarmı</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial; padding: 20px; background: #f6f8fa; color: #111; transition: background 0.15s; }
+    h1 { margin-top: 0; }
+    .controls { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    label { display:flex; flex-direction:column; font-size:14px; }
+    button { padding:10px 14px; font-size:16px; }
+    input[type="range"] { width:200px; }
+    #status { margin-top:12px; font-weight:600; }
+    #flash { position:fixed; inset:0; pointer-events:none; opacity:0; transition:opacity 0.08s; background:rgba(255,60,60,0.9); }
+    small { color:#555; }
+  </style>
+</head>
+<body>
+  <h1>Kapı Sesi Alarmı</h1>
+  <p>Kısa bir kurulum: "Başlat"a basın, mikrofon izni verin. Kapı vuruşuna benzer ani ses algılanınca alarm çalacaktır. Uyurken tarayıcıyı açık bırakın (arka planda bazı tarayıcılar sesi kısıtlayabilir).</p>
+
+  <div class="controls">
+    <button id="startBtn">Başlat</button>
+    <button id="stopBtn" disabled>Durdur</button>
+
+    <label>
+      Hassasiyet (düşük = daha hassas)
+      <input id="sensitivity" type="range" min="0.2" max="5" step="0.1" value="1.2" />
+      <small>Faktör: <span id="sensitivityVal">1.2</span></small>
+    </label>
+
+    <label>
+      Mutlak Eşik (gürültü eşiği)
+      <input id="absThreshold" type="range" min="0.0005" max="0.02" step="0.0005" value="0.002" />
+      <small>Şu an: <span id="absVal">0.0020</span></small>
+    </label>
+
+    <label>
+      Debounce (saniye)
+      <input id="cooldown" type="range" min="0.5" max="10" step="0.5" value="3" />
+      <small><span id="cooldownVal">3</span>s</small>
+    </label>
+  </div>
+
+  <div id="status">Durum: Durduruldu</div>
+
+  <div style="margin-top:16px;">
+    <button id="testAlarm">Test Alarmı</button>
+    <small style="margin-left:8px">(Alarmı ve ses seviyesini test eder.)</small>
+  </div>
+
+  <div id="flash"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
